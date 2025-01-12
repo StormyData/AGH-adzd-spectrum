@@ -1,6 +1,10 @@
 import time
 import psycopg2
 
+REDSHIFT_ENDPOINT = "your_redshift_endpoin"
+RDS_ENDPOINT = "your_rds_endpoint"
+
+
 def measure_query_time(connection, query):
     start_time = time.time()
     with connection.cursor() as cursor:
@@ -17,10 +21,10 @@ query = load_query_from_file('./SQL/query.sql')
 
 # 1. Redshift
 redshift_conn = psycopg2.connect(
-    dbname='redshift',
+    dbname='dev',
     user='awsuser',
     password='Adzd1234*',
-    host='your_redshift_endpoint',
+    host=REDSHIFT_ENDPOINT,
     port=5439
 )
 
@@ -29,7 +33,7 @@ rds_conn = psycopg2.connect(
     dbname='postgres',
     user='postgres',
     password='Adzd1234*',
-    host='your_rds_endpoint',
+    host=RDS_ENDPOINT,
     port=5432 
 )
 

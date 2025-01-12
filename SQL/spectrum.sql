@@ -25,3 +25,6 @@ LOCATION 's3://openaq-data-archive/records/csv.gz/';
 alter table myspectrum_schema.air_quality_data add
 partition(location_id=2178, year=2022, month=05) 
 location 's3://openaq-data-archive/records/csv.gz/locationid=2178/year=2022/month=05/';
+
+
+SELECT COUNT(*) FROM myspectrum_schema.air_quality_data WHERE location_id = 2178; 

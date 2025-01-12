@@ -25,6 +25,7 @@
           dbeaver-bin
           awscli2
           terraform
+          (python3.withPackages (ps: with ps; [psycopg2]))
         ]; };
       }
     );

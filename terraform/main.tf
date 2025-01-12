@@ -43,6 +43,12 @@ resource "aws_security_group" "rds" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    from_port = 5439
+    to_port = 5439
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port = 0
     to_port  = 0
@@ -90,6 +96,7 @@ resource "aws_redshift_cluster" "this" {
   skip_final_snapshot = true
   default_iam_role_arn = data.aws_iam_role.this.arn
   iam_roles = [data.aws_iam_role.this.arn]
+  vpc_security_group_ids = [aws_security_group.rds.id]
 }
 
 resource "random_id" "name" {
@@ -133,3 +140,30 @@ resource "aws_s3_object_copy" "this" {
 output "custom_bucket_name" {
   value = aws_s3_bucket.this.bucket
 }
+
+output "db_user_redshift" {
+  value = aws_redshift_cluster.this.master_username
+}
+output "db_user_rds" {
+  value = aws_db_instance.this.username
+}
+
+output "db_password_redshift" {
+  value = aws_redshift_cluster.this.master_password
+  sensitive = true
+}
+
+output "db_password_rds" {
+  value = aws_db_instance.this.password
+  sensitive = true
+}
+
+output "host_redshift" {
+  value = aws_redshift_cluster.this.endpoint
+}
+
+output "host_rds" {
+  value = aws_db_instance.this.endpoint
+}
+
+# "dbname"

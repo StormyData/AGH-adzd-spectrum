@@ -32,15 +32,14 @@ BEGIN
         );
 
         -- Import pliku z podanym zakończeniem
-        EXECUTE FORMAT(
-            $$SELECT aws_s3.table_import_from_s3(
+        EXECUTE $a$ 
+            SELECT aws_s3.table_import_from_s3(
                 'air_quality_data',
                 '', 
                 '(FORMAT csv, HEADER match, DELIMITER '','', QUOTE ''"'', ESCAPE ''\'')',
-                '<CUSTOM_BUCKET_NAME>', '%s', 'us-east-1'
-            );$$,
-            s3_path
-        );
+                '<CUSTOM_BUCKET_NAME>', $1, 'us-east-1'
+            ) 
+        $a$ USING s3_path;
 
         -- Opcjonalnie: logowanie postępu
         RAISE NOTICE 'Zaimportowano plik: %', s3_path;
