@@ -8,8 +8,6 @@ WITH aggregated_data AS (
         MIN(value) AS min_value
     FROM
         air_quality_data
-    WHERE
-        datetime BETWEEN NOW() - INTERVAL '1 year' AND NOW()
     GROUP BY
         location, parameter, date_trunc('day', datetime)
 ),
