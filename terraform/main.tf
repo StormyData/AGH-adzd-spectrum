@@ -120,22 +120,24 @@ resource "aws_s3_bucket_public_access_block" "this" {
   
 # }
 
-data "aws_s3_objects" "this" {
-  bucket = "openaq-data-archive"
-  prefix = "records/csv.gz/locationid=2178/year=2022/month=05/"
-}
+# data "aws_s3_objects" "this" {
+#   bucket = "openaq-data-archive"
+#   prefix = "records/csv.gz/locationid=2178/year=2022/month=05/"
+# }
 
-resource "aws_s3_object_copy" "this" {
-  for_each = toset(data.aws_s3_objects.this.keys)
+# resource "aws_s3_object_copy" "this" {
+#   for_each = toset(data.aws_s3_objects.this.keys)
 
-  bucket = aws_s3_bucket.this.bucket
-  key    = each.value
-  source = "openaq-data-archive/${each.value}"
+#   bucket = aws_s3_bucket.this.bucket
+#   key    = each.value
+#   source = "openaq-data-archive/${each.value}"
 
-  acl = "bucket-owner-full-control"
+#   acl = "bucket-owner-full-control"
 
-  content_encoding = "gzip"
-}
+#   content_encoding = "gzip"
+# }
+# aws s3 cp --content-encoding gzip --recursive s3://openaq-data-archive/records/csv.gz/locationid=2178/year=2022/month=05/ s3://${bucket_name}/records/csv.gz/locationid=2178/year=2022/month=05/
+
 
 output "custom_bucket_name" {
   value = aws_s3_bucket.this.bucket

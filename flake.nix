@@ -20,12 +20,12 @@
         };
       in
       {
-        devShells.default = pkgs.mkShell { packages = with pkgs; [ 
+        devShells.default = pkgs.mkShell { packages = with pkgs; [
           bashInteractive 
           dbeaver-bin
           awscli2
           terraform
-          (python3.withPackages (ps: with ps; [psycopg2]))
+          (python312.withPackages (ps: with ps; [psycopg2]))
         ]; };
       }
     );

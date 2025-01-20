@@ -1,4 +1,4 @@
-CREATE TABLE air_quality_data (
+CREATE TABLE public.air_quality_data (
     location_id INTEGER NOT NULL,
     sensors_id INTEGER NOT NULL,
     location VARCHAR(255) NOT NULL,
@@ -14,10 +14,12 @@ DISTKEY (location_id) -- Distribution key for optimal joins
 SORTKEY (datetime);   -- Sort key for efficient time-based queries
 
 
-COPY air_quality_data
+COPY public.air_quality_data
 FROM 's3://openaq-data-archive/records/csv.gz/locationid=2178/year=2022/month=05/'
 IAM_ROLE 'arn:aws:iam::847382997868:role/LabRole'
 CSV
 GZIP
 IGNOREHEADER 1
 TIMEFORMAT 'auto';
+
+COMMIT;

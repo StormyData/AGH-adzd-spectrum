@@ -45,3 +45,5 @@ BEGIN
         RAISE NOTICE 'Zaimportowano plik: %', s3_path;
     END LOOP;
 END $$;
+
+COMMIT;

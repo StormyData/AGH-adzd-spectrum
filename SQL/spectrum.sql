@@ -1,9 +1,12 @@
-create external schema myspectrum_schema 
+create external schema if not exists myspectrum_schema
 from data catalog 
 database 'myspectrum_db' 
 iam_role 'arn:aws:iam::847382997868:role/LabRole'
 create external database if not exists;
+COMMIT;
 
+
+drop table if exists myspectrum_schema.air_quality_data;
 create external table myspectrum_schema.air_quality_data (
     _location_id INTEGER,
     sensors_id INTEGER,
@@ -21,10 +24,11 @@ FIELDS TERMINATED BY ','
 STORED AS TEXTFILE
 LOCATION 's3://openaq-data-archive/records/csv.gz/';
 
+COMMIT;
 
 alter table myspectrum_schema.air_quality_data add
 partition(location_id=2178, year=2022, month=05) 
 location 's3://openaq-data-archive/records/csv.gz/locationid=2178/year=2022/month=05/';
 
-
-SELECT COUNT(*) FROM myspectrum_schema.air_quality_data WHERE location_id = 2178; 
+COMMIT;
+-- SELECT COUNT(*) FROM myspectrum_schema.air_quality_data WHERE location_id = 2178; 
