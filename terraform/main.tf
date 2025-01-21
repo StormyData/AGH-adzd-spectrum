@@ -116,10 +116,6 @@ resource "aws_s3_bucket_public_access_block" "this" {
   restrict_public_buckets = true
 }
 
-# resource "aws_s3_bucket_object" "name" {
-  
-# }
-
 # data "aws_s3_objects" "this" {
 #   bucket = "openaq-data-archive"
 #   prefix = "records/csv.gz/locationid=2178/year=2022/month=05/"
